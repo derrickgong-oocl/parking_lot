@@ -61,6 +61,21 @@ public class ParkingLotTest {
         assertNull(second_ticket);
     }
 
+    @Test
+    void test_fetch_car_twice() {
+        ParkingLot parkinglot = new ParkingLot(10);
+        Car carA = new Car("a");
+        Car carB = new Car("b");
+        Ticket ticketA = parkinglot.park(carA);
+        Ticket ticketB = parkinglot.park(carB);
+
+        Car fetch_carA = parkinglot.fetch(ticketA);
+        Car fetch_carB = parkinglot.fetch(ticketB);
+
+        assertNotNull(fetch_carA);
+        assertNotNull(fetch_carB);
+    }
+
 
 
 
