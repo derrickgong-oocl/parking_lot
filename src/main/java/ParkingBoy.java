@@ -3,6 +3,10 @@ import java.util.ArrayList;
 public class ParkingBoy {
     public ArrayList<ParkingLot> parkingLotlist;
 
+    public ParkingBoy() {
+        this.parkingLotlist = new ArrayList<ParkingLot>();
+    }
+
     public ParkingBoy(ArrayList<ParkingLot> parkingLotlist) {
         this.parkingLotlist = parkingLotlist;
     }
