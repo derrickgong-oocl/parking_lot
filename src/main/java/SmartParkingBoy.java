@@ -1,6 +1,6 @@
 import java.util.ArrayList;
 
-public class SmartParkingBoy extends ParkingBoy{
+public class SmartParkingBoy extends ParkingBoy {
 
     public ArrayList<ParkingLot> parkingLotlist;
 
@@ -8,6 +8,7 @@ public class SmartParkingBoy extends ParkingBoy{
         this.parkingLotlist = parkingLotlist;
     }
 
+    @Override
     public Ticket park(Car car) {
         ParkingLot toPark = parkingLotlist.get(0);
         int postionLeft = toPark.capacity - toPark.carList.size();
@@ -19,6 +20,16 @@ public class SmartParkingBoy extends ParkingBoy{
             }
         }
         return toPark.park(car);
+    }
+
+
+    public Car fetch(Ticket ticket) {
+        for (ParkingLot curr : parkingLotlist) {
+            if (curr.ticketList.contains(ticket)) {
+                return curr.fetch(ticket);
+            }
+        }
+        throw new IllegalArgumentException("Unrecognized parking ticket");
     }
 
 
