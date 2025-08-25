@@ -5,6 +5,5 @@ public class Ticket {
 
     public Ticket(String car_id) {
         this.carId = car_id;
-
     }
 }

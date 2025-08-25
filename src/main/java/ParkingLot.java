@@ -1,15 +1,15 @@
 import java.util.ArrayList;
 
 public class ParkingLot {
-    private int capacity;
+    private final int capacity;
     ArrayList<Car> car_list;
     ArrayList<Ticket> ticket_list;
 
 
     public ParkingLot(int capacity) {
-        this.car_list = new ArrayList<Car>(capacity);
+        this.car_list = new ArrayList<>(capacity);
         this.capacity = capacity;
-        this.ticket_list = new ArrayList<Ticket>(capacity);
+        this.ticket_list = new ArrayList<>(capacity);
     }
 
     public Ticket park(Car car) {
