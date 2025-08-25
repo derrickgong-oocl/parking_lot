@@ -21,9 +21,9 @@ public class ParkingLotTest {
         Car car = new Car("abc");
         Ticket ticket = parkinglot.park(car);
 
-        Car fetch_car = parkinglot.fetch(ticket);
+        Car fetchCar = parkinglot.fetch(ticket);
 
-        assertNotNull(fetch_car);
+        assertNotNull(fetchCar);
     }
 
     @Test
@@ -32,10 +32,11 @@ public class ParkingLotTest {
         Car car = new Car("abc");
         parkinglot.park(car);
 
-        Ticket wrong_ticket = new Ticket("123");
+        Ticket wrongTicket = new Ticket("123");
 
 
-        assertThrows(IllegalArgumentException.class, () -> parkinglot.fetch(wrong_ticket));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkinglot.fetch(wrongTicket));
+        assertEquals("Unrecognized parking ticket", exception.getMessage());
     }
 
     @Test
@@ -43,20 +44,22 @@ public class ParkingLotTest {
         ParkingLot parkinglot = new ParkingLot(10);
         Car car = new Car("123");
         Ticket ticket = parkinglot.park(car);
-        Car fetch_car = parkinglot.fetch(ticket);
+        Car fetchCar = parkinglot.fetch(ticket);
 
-        assertNotNull(fetch_car);
-        assertThrows(IllegalArgumentException.class, () -> parkinglot.fetch(ticket));
+        assertNotNull(fetchCar);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkinglot.fetch(ticket));
+        assertEquals("Unrecognized parking ticket", exception.getMessage());
     }
 
     @Test
     void test_park_no_position() {
         ParkingLot parkinglot = new ParkingLot(1);
         Car car = new Car("123");
-        Car second_car = new Car("321");
+        Car secondCar = new Car("321");
         parkinglot.park(car);
 
-        assertThrows(IllegalArgumentException.class, () -> parkinglot.park(second_car));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkinglot.park(secondCar));
+        assertEquals("No available position", exception.getMessage());
     }
 
     @Test
@@ -67,11 +70,11 @@ public class ParkingLotTest {
         Ticket ticketA = parkinglot.park(carA);
         Ticket ticketB = parkinglot.park(carB);
 
-        Car fetch_carA = parkinglot.fetch(ticketA);
-        Car fetch_carB = parkinglot.fetch(ticketB);
+        Car fetchCarA = parkinglot.fetch(ticketA);
+        Car fetchCarB = parkinglot.fetch(ticketB);
 
-        assertNotNull(fetch_carA);
-        assertNotNull(fetch_carB);
+        assertNotNull(fetchCarA);
+        assertNotNull(fetchCarB);
     }
 
 

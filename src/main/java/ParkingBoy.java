@@ -1,14 +1,27 @@
+import java.util.ArrayList;
+
 public class ParkingBoy {
-    public ParkingLot parkingLot;
-    public ParkingBoy(ParkingLot parkingLot) {
-        this.parkingLot = parkingLot;
+    public ArrayList<ParkingLot> parkingLotlist;
+
+    public ParkingBoy(ArrayList<ParkingLot> parkingLotlist) {
+        this.parkingLotlist = parkingLotlist;
     }
 
     public Ticket park(Car car) {
-        return parkingLot.park(car);
+        for (ParkingLot curr : parkingLotlist) {
+            if (curr.carList.size() < curr.capacity) {
+                return curr.park(car);
+            }
+        }
+        throw new IllegalArgumentException("No available position");
     }
 
     public Car fetch(Ticket ticket) {
-        return parkingLot.fetch(ticket);
+        for (ParkingLot curr : parkingLotlist) {
+            if (curr.ticketList.contains(ticket)) {
+                return curr.fetch(ticket);
+            }
+        }
+        throw new IllegalArgumentException("Unrecognized parking ticket");
     }
 }

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 
 public class ParkingLot {
-    private final int capacity;
+    public final int capacity;
     ArrayList<Car> carList;
     ArrayList<Ticket> ticketList;
 

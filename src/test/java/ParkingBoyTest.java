@@ -1,11 +1,18 @@
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class ParkingBoyTest {
     @Test
     void test_parking_boy_fetch_ticket() {
+        ArrayList<ParkingLot> parkinglotlist = new ArrayList<>();
         ParkingLot parkinglot = new ParkingLot(10);
-        ParkingBoy parkingBoy = new ParkingBoy(parkinglot);
+
+        parkinglotlist.add(parkinglot);
+
+        ParkingBoy parkingBoy = new ParkingBoy(parkinglotlist);
         Car car = new Car("abc");
         Ticket ticket = parkingBoy.park(car);
 
@@ -14,66 +21,102 @@ public class ParkingBoyTest {
 
     @Test
     void test_parking_boy_fetch_car() {
+        ArrayList<ParkingLot> parkinglotlist = new ArrayList<>();
         ParkingLot parkinglot = new ParkingLot(10);
-        ParkingBoy parkingBoy = new ParkingBoy(parkinglot);
+        parkinglotlist.add(parkinglot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkinglotlist);
         Car car = new Car("abc");
         Ticket ticket = parkingBoy.park(car);
 
-        Car fetch_car = parkinglot.fetch(ticket);
+        Car fetchCar = parkinglot.fetch(ticket);
 
-        assertNotNull(fetch_car);
+        assertNotNull(fetchCar);
     }
 
     @Test
     void test_parking_boy_fetch_wrong_ticket() {
+        ArrayList<ParkingLot> parkinglotlist = new ArrayList<>();
         ParkingLot parkinglot = new ParkingLot(10);
-        ParkingBoy parkingBoy = new ParkingBoy(parkinglot);
+        parkinglotlist.add(parkinglot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkinglotlist);
         Car car = new Car("abc");
         parkingBoy.park(car);
 
-        Ticket wrong_ticket = new Ticket("123");
+        Ticket wrongTicket = new Ticket("123");
 
 
-        assertThrows(IllegalArgumentException.class, () -> parkingBoy.fetch(wrong_ticket));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingBoy.fetch(wrongTicket));
+        assertEquals("Unrecognized parking ticket", exception.getMessage());
     }
 
     @Test
     void test_parking_boy_fetch_used_ticket() {
+        ArrayList<ParkingLot> parkinglotlist = new ArrayList<>();
         ParkingLot parkinglot = new ParkingLot(10);
-        ParkingBoy parkingBoy = new ParkingBoy(parkinglot);
+        parkinglotlist.add(parkinglot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkinglotlist);
         Car car = new Car("123");
         Ticket ticket = parkingBoy.park(car);
-        Car fetch_car = parkingBoy.fetch(ticket);
+        Car fetchCar = parkingBoy.fetch(ticket);
 
-        assertNotNull(fetch_car);
-        assertThrows(IllegalArgumentException.class, () -> parkingBoy.fetch(ticket));
+        assertNotNull(fetchCar);
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingBoy.fetch(ticket));
+        assertEquals("Unrecognized parking ticket", exception.getMessage());
     }
 
     @Test
-    void test_park_no_position() {
+    void test_parking_boy_park_no_position() {
+        ArrayList<ParkingLot> parkinglotlist = new ArrayList<>();
         ParkingLot parkinglot = new ParkingLot(1);
-        ParkingBoy parkingBoy = new ParkingBoy(parkinglot);
+        parkinglotlist.add(parkinglot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkinglotlist);
         Car car = new Car("123");
-        Car second_car = new Car("321");
+        Car secondCar = new Car("321");
         parkingBoy.park(car);
 
-        assertThrows(IllegalArgumentException.class, () -> parkingBoy.park(second_car));
+        IllegalArgumentException exception = assertThrows(IllegalArgumentException.class, () -> parkingBoy.park(secondCar));
+        assertEquals("No available position", exception.getMessage());
     }
 
     @Test
-    void test_fetch_car_twice() {
+    void test_parking_boy_fetch_car_twice() {
+        ArrayList<ParkingLot> parkinglotlist = new ArrayList<>();
         ParkingLot parkinglot = new ParkingLot(10);
-        ParkingBoy parkingBoy = new ParkingBoy(parkinglot);
+        parkinglotlist.add(parkinglot);
+        ParkingBoy parkingBoy = new ParkingBoy(parkinglotlist);
         Car carA = new Car("a");
         Car carB = new Car("b");
         Ticket ticketA = parkingBoy.park(carA);
         Ticket ticketB = parkingBoy.park(carB);
 
-        Car fetch_carA = parkingBoy.fetch(ticketA);
-        Car fetch_carB = parkingBoy.fetch(ticketB);
+        Car fetchCarA = parkingBoy.fetch(ticketA);
+        Car fetchCarB = parkingBoy.fetch(ticketB);
 
-        assertNotNull(fetch_carA);
-        assertNotNull(fetch_carB);
+        assertNotNull(fetchCarA);
+        assertNotNull(fetchCarB);
+    }
+
+
+    @Test
+    void test_parking_boy_park_second_lot() {
+        ArrayList<ParkingLot> parkinglotlist = new ArrayList<>();
+        ParkingLot parkinglotFirst = new ParkingLot(1);
+        ParkingLot parkinglotSecond = new ParkingLot(10);
+        parkinglotlist.add(parkinglotFirst);
+        parkinglotlist.add(parkinglotSecond);
+
+        ParkingBoy parkingBoy = new ParkingBoy(parkinglotlist);
+        Car carA = new Car("a");
+        Car carB = new Car("b");
+
+        Ticket ticketA = parkingBoy.park(carA);
+        Ticket ticketB = parkingBoy.park(carB);
+
+
+        assertNotNull(ticketA);
+        assertNotNull(ticketB);
+        assertEquals(parkingBoy.parkingLotlist.get(0).carList.get(0), carA);
+        assertEquals(parkingBoy.parkingLotlist.get(1).carList.get(0), carB);
     }
 
 
