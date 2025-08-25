@@ -119,5 +119,32 @@ public class ParkingBoyTest {
         assertEquals(parkingBoy.parkingLotlist.get(1).carList.get(0), carB);
     }
 
+    @Test
+    void test_smart_parking_boy_park() {
+        ArrayList<ParkingLot> parkinglotlist = new ArrayList<>();
+        ParkingLot parkinglotFirst = new ParkingLot(5);
+        ParkingLot parkinglotSecond = new ParkingLot(5);
+        ParkingLot parkinglotThird = new ParkingLot(5);
+        parkinglotFirst.park(new Car("a"));
+        parkinglotSecond.park(new Car("b"));
+
+        parkinglotlist.add(parkinglotFirst);
+        parkinglotlist.add(parkinglotSecond);
+        parkinglotlist.add(parkinglotThird);
+
+        SmartParkingBoy smartParkingBoy = new SmartParkingBoy(parkinglotlist);
+
+
+
+        Car tmpCar = new Car("c");
+        Ticket ticket = smartParkingBoy.park(tmpCar);
+
+
+
+        assertNotNull(ticket);
+        assertEquals(smartParkingBoy.parkingLotlist.get(2).carList.get(0), tmpCar);
+    }
+
+
 
 }
