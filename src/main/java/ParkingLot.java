@@ -2,34 +2,34 @@ import java.util.ArrayList;
 
 public class ParkingLot {
     private final int capacity;
-    ArrayList<Car> car_list;
-    ArrayList<Ticket> ticket_list;
+    ArrayList<Car> carList;
+    ArrayList<Ticket> ticketList;
 
 
     public ParkingLot(int capacity) {
-        this.car_list = new ArrayList<>(capacity);
+        this.carList = new ArrayList<>(capacity);
         this.capacity = capacity;
-        this.ticket_list = new ArrayList<>(capacity);
+        this.ticketList = new ArrayList<>(capacity);
     }
 
     public Ticket park(Car car) {
-        if (car_list.size() >= capacity) {
+        if (carList.size() >= capacity) {
             throw new IllegalArgumentException("No available position");
         }
-        car_list.add(car);
+        carList.add(car);
         Ticket ticket = new Ticket(car.id);
-        ticket_list.add(ticket);
+        ticketList.add(ticket);
         return ticket;
     }
 
     public Car fetch(Ticket ticket) {
-        if (!ticket_list.contains(ticket)) {
+        if (!ticketList.contains(ticket)) {
             throw new IllegalArgumentException("Unrecognized parking ticket");
         }
-        int index = ticket_list.indexOf(ticket);
-        ticket_list.remove(index);
-        Car car = car_list.get(index);
-        car_list.remove(index);
+        int index = ticketList.indexOf(ticket);
+        ticketList.remove(index);
+        Car car = carList.get(index);
+        carList.remove(index);
 
         return car;
     }

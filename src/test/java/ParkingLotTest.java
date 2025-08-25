@@ -30,7 +30,7 @@ public class ParkingLotTest {
     void test_fetch_wrong_ticket() {
         ParkingLot parkinglot = new ParkingLot(10);
         Car car = new Car("abc");
-        Ticket ticket = parkinglot.park(car);
+        parkinglot.park(car);
 
         Ticket wrong_ticket = new Ticket("123");
 
@@ -54,7 +54,7 @@ public class ParkingLotTest {
         ParkingLot parkinglot = new ParkingLot(1);
         Car car = new Car("123");
         Car second_car = new Car("321");
-        Ticket first_ticket = parkinglot.park(car);
+        parkinglot.park(car);
 
         assertThrows(IllegalArgumentException.class, () -> parkinglot.park(second_car));
     }
@@ -73,6 +73,10 @@ public class ParkingLotTest {
         assertNotNull(fetch_carA);
         assertNotNull(fetch_carB);
     }
+
+
+
+
 
 
 
