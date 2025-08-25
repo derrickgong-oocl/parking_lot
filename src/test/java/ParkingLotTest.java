@@ -33,9 +33,9 @@ public class ParkingLotTest {
         Ticket ticket = parkinglot.park(car);
 
         Ticket wrong_ticket = new Ticket("123");
-        Car fetch_car = parkinglot.fetch(wrong_ticket);
 
-        assertNull(fetch_car);
+
+        assertThrows(IllegalArgumentException.class, () -> parkinglot.fetch(wrong_ticket));
     }
 
     @Test
@@ -44,10 +44,9 @@ public class ParkingLotTest {
         Car car = new Car("123");
         Ticket ticket = parkinglot.park(car);
         Car fetch_car = parkinglot.fetch(ticket);
-        Car fetch_tmp = parkinglot.fetch(ticket);
 
         assertNotNull(fetch_car);
-        assertNull(fetch_tmp);
+        assertThrows(IllegalArgumentException.class, () -> parkinglot.fetch(ticket));
     }
 
     @Test

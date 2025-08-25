@@ -24,7 +24,7 @@ public class ParkingLot {
 
     public Car fetch(Ticket ticket) {
         if (!ticket_list.contains(ticket)) {
-            return null;
+            throw new IllegalArgumentException("Unrecognized parking ticket");
         }
         int index = ticket_list.indexOf(ticket);
         ticket_list.remove(index);
