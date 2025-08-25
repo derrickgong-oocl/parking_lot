@@ -55,9 +55,8 @@ public class ParkingLotTest {
         Car car = new Car("123");
         Car second_car = new Car("321");
         Ticket first_ticket = parkinglot.park(car);
-        Ticket second_ticket = parkinglot.park(second_car);
 
-        assertNull(second_ticket);
+        assertThrows(IllegalArgumentException.class, () -> parkinglot.park(second_car));
     }
 
     @Test

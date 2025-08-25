@@ -14,7 +14,7 @@ public class ParkingLot {
 
     public Ticket park(Car car) {
         if (car_list.size() >= capacity) {
-            return null;
+            throw new IllegalArgumentException("No available position");
         }
         car_list.add(car);
         Ticket ticket = new Ticket(car.id);
